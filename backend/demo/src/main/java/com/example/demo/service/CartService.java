@@ -10,7 +10,7 @@ import java.util.*;
 public class CartService {
 
     private final Map<Long, CartItem> cart = new HashMap<>();
-    private Long nextId = 1L; // unique cart item ID generator
+    private Long nextId = 1L; 
 
     public Collection<CartItem> getCart() {
         return cart.values();
@@ -19,7 +19,7 @@ public class CartService {
     public void add(Product product) {
        
 
-    // Check if product already exists in cart
+    
     Optional<CartItem> existing = cart.values().stream()
             .filter(item -> item.getProduct().getId().equals(product.getId()))
             .findFirst();
@@ -27,8 +27,8 @@ public class CartService {
     if (existing.isPresent()) {
         existing.get().setQuantity(existing.get().getQuantity() + 1);
     } else {
-        CartItem newItem = new CartItem(nextId++, product, 1); // ✅ set ID here
-        newItem.setId(nextId - 1); // make sure ID is set
+        CartItem newItem = new CartItem(nextId++, product, 1); 
+        newItem.setId(nextId - 1); 
         cart.put(newItem.getId(), newItem);
     }
 }

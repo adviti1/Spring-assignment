@@ -1,7 +1,7 @@
 package com.example.demo.model;
 
 public class CartItem {
-    private Long id;        // Unique cart item ID
+    private Long id;        
     private Product product;
     private int quantity;
 

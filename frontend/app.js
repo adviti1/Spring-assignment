@@ -2,13 +2,11 @@ console.log("app.js loaded");
 
 const API_BASE = "http://localhost:8080/api";
 
-// ---------- STATE ----------
 const state = {
   products: [],
   cartItems: []
 };
 
-// ---------- API HELPER ----------
 const api = {
   async request(path, options = {}) {
     console.log("API:", API_BASE + path);
@@ -23,10 +21,9 @@ const api = {
       throw new Error(text || "API Error");
     }
 
-    // FIX: only parse JSON if content exists
     const contentType = res.headers.get("content-type");
     if (res.status === 204 || !contentType || !contentType.includes("application/json")) {
-      return null; // empty response
+      return null;
     }
 
     return res.json();
@@ -34,7 +31,6 @@ const api = {
 };
 
 
-// ---------- LOAD DATA ----------
 async function loadProducts() {
   try {
     state.products = await api.request("/products");
@@ -53,7 +49,6 @@ async function loadCart() {
   }
 }
 
-// ---------- RENDER PRODUCTS ----------
 function renderProducts() {
   const grid = document.getElementById("product-grid");
   const loading = document.getElementById("loading-state");
@@ -83,7 +78,6 @@ function renderProducts() {
   content.style.display = "block";
 }
 
-// ---------- RENDER CART ----------
 function renderCart() {
   const container = document.getElementById("cart-items-container");
   const footer = document.getElementById("cart-footer");
@@ -131,7 +125,6 @@ function renderCart() {
   footer.style.display = "block";
 }
 
-// ---------- ACTIONS ----------
 window.handleAddToCart = async (productId) => {
   await api.request(`/cart/add/${productId}`, { method: "POST" });
   await loadCart();
@@ -156,14 +149,12 @@ window.handleCheckout = async () => {
   await loadCart();
 };
 
-// ---------- ERROR ----------
 function showError(msg) {
   document.getElementById("loading-state").style.display = "none";
   document.getElementById("error-state").style.display = "block";
   document.getElementById("error-message").innerText = msg;
 }
 
-// ---------- CART SIDEBAR ----------
 function setupCartUI() {
   document.getElementById("cart-toggle-btn").onclick = () => {
     document.getElementById("cart-sidebar").classList.add("open");
@@ -179,7 +170,6 @@ function closeCart() {
   document.getElementById("cart-overlay").classList.remove("open");
 }
 
-// ---------- INIT ----------
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM ready");
   setupCartUI();
