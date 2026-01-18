@@ -16,6 +16,10 @@ public class CartController {
     public CartController(CartService cartService) {
         this.cartService = cartService;
     }
+    @GetMapping("/")
+    public String home() {
+        return "Backend is running";
+    }
 
     @GetMapping
     public Collection<CartItem> getCart() {
