@@ -2,10 +2,12 @@ console.log("app.js loaded");
 
 const API_BASE = "http://localhost:8080/api";
 
+
 const state = {
   products: [],
   cartItems: []
 };
+
 
 const api = {
   async request(path, options = {}) {
@@ -21,12 +23,7 @@ const api = {
       throw new Error(text || "API Error");
     }
 
-    const contentType = res.headers.get("content-type");
-    if (res.status === 204 || !contentType || !contentType.includes("application/json")) {
-      return null;
-    }
-
-    return res.json();
+    return res.status !== 204 ? res.json() : null;
   }
 };
 
@@ -48,6 +45,7 @@ async function loadCart() {
     console.error(err);
   }
 }
+
 
 function renderProducts() {
   const grid = document.getElementById("product-grid");
@@ -77,6 +75,7 @@ function renderProducts() {
   loading.style.display = "none";
   content.style.display = "block";
 }
+
 
 function renderCart() {
   const container = document.getElementById("cart-items-container");
@@ -125,6 +124,7 @@ function renderCart() {
   footer.style.display = "block";
 }
 
+
 window.handleAddToCart = async (productId) => {
   await api.request(`/cart/add/${productId}`, { method: "POST" });
   await loadCart();
@@ -149,11 +149,13 @@ window.handleCheckout = async () => {
   await loadCart();
 };
 
+
 function showError(msg) {
   document.getElementById("loading-state").style.display = "none";
   document.getElementById("error-state").style.display = "block";
   document.getElementById("error-message").innerText = msg;
 }
+
 
 function setupCartUI() {
   document.getElementById("cart-toggle-btn").onclick = () => {
@@ -170,10 +172,10 @@ function closeCart() {
   document.getElementById("cart-overlay").classList.remove("open");
 }
 
+
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM ready");
   setupCartUI();
   loadProducts();
   loadCart();
 });
-
