@@ -1,11 +1,11 @@
-# backend/demo/Dockerfile
+# backend/Dockerfile
 
 FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
 
-COPY mvnw pom.xml ./
-COPY .mvn .mvn
-COPY src ./src
+COPY demo/mvnw demo/pom.xml ./
+COPY demo/.mvn .mvn
+COPY demo/src ./src
 
 RUN chmod +x mvnw
 RUN ./mvnw clean package -DskipTests
