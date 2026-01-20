@@ -1,21 +1,37 @@
 package com.example.demo.model;
+import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
+
+@Entity
+@Table(name = "cart_items")
 
 public class CartItem {
-    private Long id;        
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Product product;
+
+    // @ManyToOne
+    // @JoinColumn(name = "product_id")
+    // private Product product;
+
     private int quantity;
+
+    // ✅ REQUIRED BY JPA
+    public CartItem() {}
 
     public CartItem(Product product, int quantity) {
         this.product = product;
         this.quantity = quantity;
     }
-
-  public CartItem(Long id, Product product, int quantity) {
-    this.id = id;
-    this.product = product;
-    this.quantity = quantity;
-}
-
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

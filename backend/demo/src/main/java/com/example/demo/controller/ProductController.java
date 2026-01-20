@@ -1,21 +1,26 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Product;
+import com.example.demo.service.ProductService;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+@CrossOrigin
 
 @RestController
 @RequestMapping("/api/products")
-@CrossOrigin(origins = "*")
 public class ProductController {
+
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping
     public List<Product> getProducts() {
-        return List.of(
-            new Product(1L, "Perfume", 999),
-            new Product(2L, "Watch", 1999),
-            new Product(3L, "Shoes", 2999)
-        );
+        return productService.getAllProducts();
     }
 }
+

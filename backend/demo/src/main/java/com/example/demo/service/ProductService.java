@@ -2,26 +2,25 @@ package com.example.demo.service;
 
 import com.example.demo.model.Product;
 import org.springframework.stereotype.Service;
+import com.example.demo.repository.ProductRepository;
+
 
 import java.util.List;
 
 @Service
 public class ProductService {
 
-    private final List<Product> products = List.of(
-        new Product(1L, "Perfume", 999),
-        new Product(2L, "Watch", 1999),
-        new Product(3L, "Shoes", 2999)
-    );
+    private final ProductRepository productRepository;
+
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     public List<Product> getAllProducts() {
-        return products;
+        return productRepository.findAll();
     }
 
     public Product getById(Long id) {
-        return products.stream()
-                .filter(p -> p.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+        return productRepository.findById(id).orElse(null);
     }
 }

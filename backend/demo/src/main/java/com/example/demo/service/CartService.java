@@ -2,48 +2,57 @@ package com.example.demo.service;
 
 import com.example.demo.model.CartItem;
 import com.example.demo.model.Product;
+import com.example.demo.repository.CartItemRepository;
+import com.example.demo.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
 
 @Service
 public class CartService {
 
-    private final Map<Long, CartItem> cart = new HashMap<>();
-    private Long nextId = 1L; 
+    private final CartItemRepository cartItemRepository;
+    private final ProductRepository productRepository;
 
-    public Collection<CartItem> getCart() {
-        return cart.values();
+    public CartService(CartItemRepository cartItemRepository,
+                       ProductRepository productRepository) {
+        this.cartItemRepository = cartItemRepository;
+        this.productRepository = productRepository;
     }
 
-    public void add(Product product) {
-       
-
-    
-    Optional<CartItem> existing = cart.values().stream()
-            .filter(item -> item.getProduct().getId().equals(product.getId()))
-            .findFirst();
-
-    if (existing.isPresent()) {
-        existing.get().setQuantity(existing.get().getQuantity() + 1);
-    } else {
-        CartItem newItem = new CartItem(nextId++, product, 1); 
-        newItem.setId(nextId - 1); 
-        cart.put(newItem.getId(), newItem);
-    }
-}
-    public void update(Long cartItemId, int qty) {
-        CartItem item = cart.get(cartItemId);
-        if (item != null) {
-            item.setQuantity(qty);
-        }
+    // GET CART
+    public List<CartItem> getCartItems() {
+        return cartItemRepository.findAll();
     }
 
-    public void delete(Long cartItemId) {
-        cart.remove(cartItemId);
+    // ADD TO CART
+    public void addToCart(Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        CartItem item = cartItemRepository.findByProduct(product)
+                .orElse(new CartItem(product, 0));
+
+        item.setQuantity(item.getQuantity() + 1);
+        cartItemRepository.save(item);
     }
 
+    // UPDATE QTY
+    public void updateQuantity(Long cartItemId, int qty) {
+        CartItem item = cartItemRepository.findById(cartItemId)
+                .orElseThrow(() -> new RuntimeException("Cart item not found"));
+
+        item.setQuantity(qty);
+        cartItemRepository.save(item);
+    }
+
+    // DELETE ITEM
+    public void deleteItem(Long cartItemId) {
+        cartItemRepository.deleteById(cartItemId);
+    }
+
+    // CHECKOUT
     public void checkout() {
-        cart.clear();
+        cartItemRepository.deleteAll();
     }
 }

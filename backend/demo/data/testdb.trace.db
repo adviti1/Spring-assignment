@@ -1,0 +1,20 @@
+2026-01-20 14:28:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-220]
+2026-01-20 14:43:15 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SHOW [*]TABELS"; SQL statement:
+SHOW TABELS [42000-220]
+2026-01-20 14:43:24 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SHOW [*]TABLE"; SQL statement:
+SHOW TABLE [42000-220]
+2026-01-20 14:43:25 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SHOW [*]TABLE"; SQL statement:
+SHOW TABLE [42000-220]
+2026-01-20 14:43:38 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-220]
+2026-01-20 14:45:12 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-220]
+2026-01-20 15:07:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-220]
+2026-01-20 15:17:38 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT [*]PRODUCTS"; expected "INTO"; SQL statement:
+INSERT PRODUCTS [42001-220]

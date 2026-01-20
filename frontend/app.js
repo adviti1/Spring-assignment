@@ -1,6 +1,6 @@
 console.log("app.js loaded");
 
-const API_BASE = "https://spring-backend-g8o8.onrender.com/api";
+const API_BASE = "http://localhost:8080/api";
 
 
 const state = {
