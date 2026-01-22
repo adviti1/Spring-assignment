@@ -3,6 +3,9 @@ package com.example.demo.service;
 import com.example.demo.model.Product;
 import org.springframework.stereotype.Service;
 import com.example.demo.repository.ProductRepository;
+import com.example.demo.dto.ProductDTO;
+
+
 
 
 import java.util.List;
@@ -16,10 +19,21 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
-    }
+    public List<ProductDTO> getAllProducts() {
+    return productRepository.findAll()
+            .stream()
+            .map(this::toDTO)
+            .toList();
+}
+   
 
+    private ProductDTO toDTO(Product product) {
+    return new ProductDTO(
+            product.getId(),
+            product.getName(),
+            product.getPrice()
+    );
+}
     public Product getById(Long id) {
         return productRepository.findById(id).orElse(null);
     }
