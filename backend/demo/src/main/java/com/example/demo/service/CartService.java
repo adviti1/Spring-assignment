@@ -50,7 +50,7 @@ private CartItemDTO toDTO(CartItem item) {
     // ADD TO CART
     public void addToCart(Long productId) {
         Product product = productRepository.findById(productId)
-                .orElsethrow new RuntimeException(appProperties.productNotFoundMsg);
+                .orElseThrow(() -> new RuntimeException(appProperties.productNotFoundMsg));
 
         CartItem item = cartItemRepository.findByProduct(product)
                 .orElse(new CartItem(product, 0));
