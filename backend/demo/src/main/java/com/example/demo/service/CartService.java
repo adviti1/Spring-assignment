@@ -4,10 +4,9 @@ import com.example.demo.model.CartItem;
 import com.example.demo.model.Product;
 import com.example.demo.repository.CartItemRepository;
 import com.example.demo.repository.ProductRepository;
-import org.springframework.stereotype.Service;
 import com.example.demo.dto.CartItemDTO;
 import com.example.demo.dto.ProductDTO;
-
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -23,34 +22,34 @@ public class CartService {
         this.productRepository = productRepository;
     }
 
-   public List<CartItemDTO> getCartItems() {
-    return cartItemRepository.findAll()
-            .stream()
-            .map(this::toDTO)
-            .toList();
-}
+    // GET CART ITEMS
+    public List<CartItemDTO> getCartItems() {
+        return cartItemRepository.findAll()
+                .stream()
+                .map(this::toDTO)
+                .toList();
+    }
 
-private CartItemDTO toDTO(CartItem item) {
-    Product p = item.getProduct();
+    private CartItemDTO toDTO(CartItem item) {
+        Product p = item.getProduct();
 
-    ProductDTO productDTO = new ProductDTO(
-            p.getId(),
-            p.getName(),
-            p.getPrice()
-    );
+        ProductDTO productDTO = new ProductDTO(
+                p.getId(),
+                p.getName(),
+                p.getPrice()
+        );
 
-    return new CartItemDTO(
-            item.getId(),
-            productDTO,
-            item.getQuantity()
-    );
-}
-
+        return new CartItemDTO(
+                item.getId(),
+                productDTO,
+                item.getQuantity()
+        );
+    }
 
     // ADD TO CART
     public void addToCart(Long productId) {
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException(appProperties.productNotFoundMsg));
+                .orElseThrow(() -> new RuntimeException("Product not found"));
 
         CartItem item = cartItemRepository.findByProduct(product)
                 .orElse(new CartItem(product, 0));
@@ -59,7 +58,7 @@ private CartItemDTO toDTO(CartItem item) {
         cartItemRepository.save(item);
     }
 
-    // UPDATE QTY
+    // UPDATE QUANTITY
     public void updateQuantity(Long cartItemId, int qty) {
         CartItem item = cartItemRepository.findById(cartItemId)
                 .orElseThrow(() -> new RuntimeException("Cart item not found"));

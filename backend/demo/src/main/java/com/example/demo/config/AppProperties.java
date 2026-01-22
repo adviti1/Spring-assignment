@@ -1,23 +1,31 @@
 package com.example.demo.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
+@ConfigurationProperties(prefix = "app")
 public class AppProperties {
 
-    @Value("${app.trafficType}")
-    public String trafficType;
+    private Operation operation;
 
-    @Value("${app.operation.createBasket}")
-    public String createBasketOp;
+    public static class Operation {
+        private String createBasket;
 
-    @Value("${app.operation.cancelBasket}")
-    public String cancelBasketOp;
+        public String getCreateBasket() {
+            return createBasket;
+        }
 
-    @Value("${app.error.productNotFound}")
-    public String productNotFoundMsg;
+        public void setCreateBasket(String createBasket) {
+            this.createBasket = createBasket;
+        }
+    }
 
-    @Value("${app.error.cartItemNotFound}")
-    public String cartItemNotFoundMsg;
+    public Operation getOperation() {
+        return operation;
+    }
+
+    public void setOperation(Operation operation) {
+        this.operation = operation;
+    }
 }

@@ -18,3 +18,9 @@ org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-22
 2026-01-20 15:17:38 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT [*]PRODUCTS"; expected "INTO"; SQL statement:
 INSERT PRODUCTS [42001-220]
+2026-01-22 12:38:47 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-220]
+2026-01-22 12:42:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-220]
+2026-01-22 12:56:08 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-220]
