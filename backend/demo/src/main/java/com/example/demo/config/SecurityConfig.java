@@ -11,7 +11,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // 🔥 THIS IS THE KEY
+            .csrf(csrf -> csrf.disable()) 
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                     "/api/**",
@@ -19,7 +19,7 @@ public class SecurityConfig {
                 ).permitAll()
                 .anyRequest().permitAll()
             )
-            .headers(headers -> headers.frameOptions(frame -> frame.disable())); // for H2
+            .headers(headers -> headers.frameOptions(frame -> frame.disable())); 
 
         return http.build();
     }
